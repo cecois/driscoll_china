@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+    <TileMap version="1.0.0" tilemapservice="http://tms.osgeo.org/1.0.0">
+      <Title>china_rend.tif</Title>
+      <Abstract></Abstract>
+      <SRS>EPSG:900913</SRS>
+      <BoundingBox minx="66.58727723213573" miny="11.78053426340801" maxx="156.80117565232652" maxy="52.37494772344021"/>
+      <Origin x="66.58727723213573" y="11.78053426340801"/>
+      <TileFormat width="256" height="256" mime-type="image/png" extension="png"/>
+      <TileSets profile="mercator">
+        <TileSet href="1" units-per-pixel="78271.51695000000473" order="1"/>
+        <TileSet href="2" units-per-pixel="39135.75847500000236" order="2"/>
+        <TileSet href="3" units-per-pixel="19567.87923750000118" order="3"/>
+      </TileSets>
+    </TileMap>
+    

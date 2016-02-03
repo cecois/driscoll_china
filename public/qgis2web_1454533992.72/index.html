@@ -1,0 +1,204 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    
+    <link rel="stylesheet" href="css/leaflet.css" />
+    
+    <link rel="stylesheet" type="text/css" href="css/qgis2web.css">
+    <link rel="stylesheet" href="css/label.css" />
+    
+    <link rel="stylesheet" href="css/MarkerCluster.css" />
+    <link rel="stylesheet" href="css/MarkerCluster.Default.css" />
+    
+    
+    
+    
+    
+    
+        <script src="js/leaflet.js"></script>
+    
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/label.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+    
+    
+    
+    
+    <script src="./resources/Autolinker.min.js"></script>
+    
+    
+        <script src="js/leaflet.markercluster.js"></script>
+    
+    
+     
+    <style>
+        #map {
+            width: 920px;
+            height: 547px;
+        }
+    </style>
+    <title></title>
+  </head>
+  <body>
+    <div id="map">
+        
+    </div>
+    
+        <script>
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[8.63831217499,64.3313609231],[54.2990865398,159.07916874]]);
+        var hash = new L.Hash(map);
+        var additional_attrib = '<a href="https://github.com/tomchadwin/qgis2web" target ="_blank">qgis2web</a>';
+        var feature_group = new L.featureGroup([]);
+        var bounds_group = new L.featureGroup([]);
+        var raster_group = new L.LayerGroup([]);
+        var basemap0 = L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            attribution: additional_attrib + ' &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 28
+        });
+        basemap0.addTo(map);
+        var basemap1 = L.tileLayer('http://a.tile.stamen.com/toner/{z}/{x}/{y}.png', {
+            attribution: additional_attrib + ' Map tiles by <a href="http://stamen.com">Stamen Design</a>,<a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash; Mapdata: &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 28
+        });
+        basemap1.addTo(map);
+        var basemap2 = L.tileLayer('http://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
+            attribution: additional_attrib + ' &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 28
+        });
+        basemap2.addTo(map);
+        var basemap3 = L.tileLayer('http://{s}.tile.openstreetmap.fr/hot/{z}/{x}/{y}.png', {
+            attribution: additional_attrib + ' &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>,Tiles courtesy of <a href="http://hot.openstreetmap.org/" target="_blank">Humanitarian OpenStreetMap Team</a>',
+            maxZoom: 28
+        });
+        basemap3.addTo(map);
+        var basemap4 = L.tileLayer('http://{s}.tile.thunderforest.com/cycle/{z}/{x}/{y}.png', {
+            attribution: additional_attrib + ' &copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>,&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 28
+        });
+        basemap4.addTo(map);
+        var basemap5 = L.tileLayer('http://{s}.tile.thunderforest.com/transport/{z}/{x}/{y}.png', {
+            attribution: additional_attrib + ' &copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>,&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 28
+        });
+        basemap5.addTo(map);
+        var basemap6 = L.tileLayer('http://{s}.tile.thunderforest.com/landscape/{z}/{x}/{y}.png', {
+            attribution: additional_attrib + ' &copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>,&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 28
+        });
+        basemap6.addTo(map);
+        var basemap7 = L.tileLayer('http://{s}.tile.thunderforest.com/outdoors/{z}/{x}/{y}.png', {
+            attribution: additional_attrib + ' &copy; <a href="http://www.opencyclemap.org">OpenCycleMap</a>,&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 28
+        });
+        basemap7.addTo(map);
+        var basemap8 = L.tileLayer('http://openmapsurfer.uni-hd.de/tiles/roads/x={x}&y={y}&z={z}', {
+            attribution: additional_attrib + ' Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @University of Heidelberg</a> &mdash; Map data:&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 28
+        });
+        basemap8.addTo(map);
+        var basemap9 = L.tileLayer('http://openmapsurfer.uni-hd.de/tiles/adminb/x={x}&y={y}&z={z}', {
+            attribution: additional_attrib + ' Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @University of Heidelberg</a> &mdash; Map data:&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 28
+        });
+        basemap9.addTo(map);
+        var basemap10 = L.tileLayer('http://openmapsurfer.uni-hd.de/tiles/roadsg/x={x}&y={y}&z={z}', {
+            attribution: additional_attrib + ' Imagery from <a href="http://giscience.uni-hd.de/">GIScience Research Group @University of Heidelberg</a> &mdash; Map data:&copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 28
+        });
+        basemap10.addTo(map);
+        var basemap11 = L.tileLayer('http://otile1.mqcdn.com/tiles/1.0.0/map/{z}/{x}/{y}.jpeg', {
+            attribution: additional_attrib + ' Tiles Courtesy of <a href="http://www.mapquest.com/">MapQuest</a> &mdash;Map data: &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>contributors, <a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 28
+        });
+        basemap11.addTo(map);
+        var basemap12 = L.tileLayer('http://otile1.mqcdn.com/tiles/1.0.0/sat/{z}/{x}/{y}.jpg', {
+            attribution: additional_attrib + ' Tiles Courtesy of <a href="http://www.mapquest.com/">MapQuest</a> &mdash;Portions Courtesy NASA/JPL-Caltech and U.S. Depart. of Agriculture,Farm Service Agency',
+            maxZoom: 28
+        });
+        basemap12.addTo(map);
+        var basemap13 = L.tileLayer('http://a.tile.stamen.com/terrain/{z}/{x}/{y}.png', {
+            attribution: additional_attrib + ' Map tiles by <a href="http://stamen.com">Stamen Design</a>,<a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash;Map data: &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 28
+        });
+        basemap13.addTo(map);
+        var basemap14 = L.tileLayer('http://a.tile.stamen.com/watercolor/{z}/{x}/{y}.png', {
+            attribution: additional_attrib + ' Map tiles by <a href="http://stamen.com">Stamen Design</a>,<a href="http://creativecommons.org/licenses/by/3.0">CC BY 3.0</a> &mdash;Map data: &copy; <a href="http://openstreetmap.org">OpenStreetMap</a>contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 28
+        });
+        basemap14.addTo(map);
+        var basemap15 = L.tileLayer('http://{s}.tile.openweathermap.org/map/clouds/{z}/{x}/{y}.png', {
+            attribution: additional_attrib + ' Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
+            maxZoom: 28
+        });
+        basemap15.addTo(map);
+        var basemap16 = L.tileLayer('http://{s}.tile.openweathermap.org/map/precipitation/{z}/{x}/{y}.png', {
+            attribution: additional_attrib + ' Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
+            maxZoom: 28
+        });
+        basemap16.addTo(map);
+        var basemap17 = L.tileLayer('http://{s}.tile.openweathermap.org/map/rain/{z}/{x}/{y}.png', {
+            attribution: additional_attrib + ' Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
+            maxZoom: 28
+        });
+        basemap17.addTo(map);
+        var basemap18 = L.tileLayer('http://{s}.tile.openweathermap.org/map/pressure/{z}/{x}/{y}.png', {
+            attribution: additional_attrib + ' Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
+            maxZoom: 28
+        });
+        basemap18.addTo(map);
+        var basemap19 = L.tileLayer('http://{s}.tile.openweathermap.org/map/wind/{z}/{x}/{y}.png', {
+            attribution: additional_attrib + ' Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
+            maxZoom: 28
+        });
+        basemap19.addTo(map);
+        var basemap20 = L.tileLayer('http://{s}.tile.openweathermap.org/map/temp/{z}/{x}/{y}.png', {
+            attribution: additional_attrib + ' Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
+            maxZoom: 28
+        });
+        basemap20.addTo(map);
+        var basemap21 = L.tileLayer('http://{s}.tile.openweathermap.org/map/snow/{z}/{x}/{y}.png', {
+            attribution: additional_attrib + ' Map data &copy; <a href="http://openweathermap.org">OpenWeatherMap</a>',
+            maxZoom: 28
+        });
+        basemap21.addTo(map);
+        var layerOrder = new Array();
+        function stackLayers() {
+            for (index = 0; index < layerOrder.length; index++) {
+                map.removeLayer(layerOrder[index]);
+                map.addLayer(layerOrder[index]);
+            }
+        }
+        function restackLayers() {
+            for (index = 0; index < layerOrder.length; index++) {
+                layerOrder[index].bringToFront();
+            }
+        }
+        map.on('overlayadd', restackLayers);
+        layerControl = L.control.layers({},{},{collapsed:false});
+        var img_chinarend = 'data/json_chinarend.png';
+        var img_bounds_chinarend = [[11.8098012497,66.5872772321],[52.3749477234,156.823243401]];
+        var overlay_chinarend = new L.imageOverlay(img_chinarend, img_bounds_chinarend);
+        bounds_group.addLayer(overlay_chinarend);
+        raster_group.addLayer(overlay_chinarend);
+        raster_group.addTo(map);
+        feature_group.addTo(map);
+    var baseMaps = {'OSM Standard': basemap0, 'Stamen Toner': basemap1, 'OSM DE': basemap2, 'OSM HOT': basemap3, 'Thunderforest Cycle': basemap4, 'Thunderforest Transport': basemap5, 'Thunderforest Landscape': basemap6, 'Thunderforest Outdoors': basemap7, 'OpenMapSurfer Roads': basemap8, 'OpenMapSurfer adminb': basemap9, 'OpenMapSurfer roadsg': basemap10, 'MapQuestOpen OSM': basemap11, 'MapQuestOpen Aerial': basemap12, 'Stamen Terrain': basemap13, 'Stamen Watercolor': basemap14, 'OpenWeatherMap Clouds': basemap15, 'OpenWeatherMap Precipitation': basemap16, 'OpenWeatherMap Rain': basemap17, 'OpenWeatherMap Pressure': basemap18, 'OpenWeatherMap Wind': basemap19, 'OpenWeatherMap Temp': basemap20, 'OpenWeatherMap Snow': basemap21};
+        L.control.layers(baseMaps,{},{collapsed:false}).addTo(map);
+        stackLayers();
+    </script>
+    
+    
+  </body>
+</html>
