@@ -1,0 +1,170 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+    <meta name="mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+
+    <link rel="stylesheet" href="css/leaflet.css" />
+
+    <link rel="stylesheet" type="text/css" href="css/qgis2web.css">
+    <link rel="stylesheet" href="css/label.css" />
+
+    <link rel="stylesheet" href="css/MarkerCluster.css" />
+    <link rel="stylesheet" href="css/MarkerCluster.Default.css" />
+    <link rel="stylesheet" href="css/fonts/fonts-offline.css" />
+
+
+
+
+
+
+
+        <script src="js/leaflet.js"></script>
+
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/label.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+
+
+
+
+    <script src="./resources/Autolinker.min.js"></script>
+
+
+        <script src="js/leaflet.markercluster.js"></script>
+
+
+        <script src="js/leaflet-side-by-side.min.js"></script>
+
+        <link rel="stylesheet" href="js/Leaflet.OpacityControls/opacity/Control.Opacity.css" />
+        <script src="js/Leaflet.OpacityControls/opacity/Control.Opacity.js"></script>
+
+        <script src="js/Leaflet.OpacityControls/jquery/jquery-1.9.1.js"></script>
+<script src="js/Leaflet.OpacityControls/jquery/jquery-ui-1.10.3.custom.min.js"></script>
+<link rel="stylesheet" href="js/Leaflet.OpacityControls/jquery/jquery-ui-1.10.3.custom.min.css" />
+
+
+
+    <style>
+
+    body{margin:0;padding:0;
+font-family:'Oswald';
+    }
+
+#header{
+	height:32px;
+	background-color:black;
+	color:white;
+	font-size:1.2em;
+	text-align:center;
+}
+
+#map {
+    width: 100%;
+    height: 100%;
+    position: fixed;
+    top: 32px;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    z-index: 0;
+}
+    </style>
+    <title></title>
+  </head>
+  <body>
+  <div id="header">Driscoll 1T (Trimarchi) - (Draft) Map of China</div>
+    <div id="map">
+
+    </div>
+
+        <script>
+        L.ImageOverlay.include({
+            getBounds: function () {
+                return this._bounds;
+            }
+        });
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[8.63831217499,64.3313609231],[54.2990865398,159.07916874]]);
+        var hash = new L.Hash(map);
+        var additional_attrib = '<a href="https://github.com/tomchadwin/qgis2web" target ="_blank">qgis2web</a>';
+        // var feature_group = new L.featureGroup([]);
+        // var bounds_group = new L.featureGroup([]);
+        // var raster_group = new L.LayerGroup([]);
+
+// var basemap0 = L.tileLayer('http://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
+//             attribution: additional_attrib + ' &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+//             maxZoom: 28
+//         });
+//         basemap0.addTo(map);
+
+        var basemap2 = L.tileLayer('http://{s}.tile.openstreetmap.de/tiles/osmde/{z}/{x}/{y}.png', {
+            // attribution: additional_attrib + ' &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors,<a href="http://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+            maxZoom: 28
+        });
+        basemap2.addTo(map);
+
+        var layerOrder = new Array();
+        function stackLayers() {
+            for (index = 0; index < layerOrder.length; index++) {
+                map.removeLayer(layerOrder[index]);
+                map.addLayer(layerOrder[index]);
+            }
+        }
+        function restackLayers() {
+            for (index = 0; index < layerOrder.length; index++) {
+                layerOrder[index].bringToFront();
+            }
+        }
+
+var drch_complete = L.tileLayer('data/tiles_partial/{z}/{x}/{y}.png', {
+            minZoom: 1,
+            maxZoom: 28,
+            tms: true
+        }).addTo(map);
+
+        map.on('overlayadd', restackLayers);
+        layerControl = L.control.layers({},{},{collapsed:false});
+        // var img_chinaalpha = 'data/json_chinaalpha.png';
+        // var img_bounds_chinaalpha = [[11.8098068758,66.5872611092],[52.3749651405,156.823268554]];
+        // var overlay_chinaalpha = new L.imageOverlay(img_chinaalpha, img_bounds_chinaalpha);
+        // bounds_group.addLayer(overlay_chinaalpha);
+        // raster_group.addLayer(overlay_chinaalpha);
+        // raster_group.addTo(map);
+        // feature_group.addTo(map);
+
+var baseMaps = {
+        // 'OSM Standard': basemap0,
+        // 'Stamen Toner': basemap1,
+         'OSM DE': basemap2,
+         // 'MapQuestOpen OSM': basemap3,
+         //  'MapQuestOpen Aerial': basemap4,
+         //  'Stamen Watercolor': basemap5
+      };
+        // L.control.layers(baseMaps,{},{collapsed:false}).addTo(map);
+        L.control.scale({options: {position: 'bottomleft', maxWidth: 100, metric: true, imperial: false, updateWhenIdle: false}}).addTo(map);
+        stackLayers();
+
+        /* ----------
+WIPE
+------------ */
+L.control.sideBySide(drch_complete).addTo(map);
+
+        /* ----------
+OPACITY
+------------ */
+var opacitySlider = new L.Control.opacitySlider();
+map.addControl(opacitySlider);
+opacitySlider.setOpacityLayer(drch_complete);
+
+
+    </script>
+
+
+  </body>
+<script type="text/javascript" language="Javascript" src="js/app.js"></script>
+</html>
